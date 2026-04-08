@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 version: '3.8'
 
 services:
@@ -9,3 +10,16 @@ services:
       - .:/app
     environment:
       - PYTHONUNBUFFERED=1
+=======
+version: '3.8'
+
+services:
+  digit-recognition:
+    build: .
+    image: digit-recognition-cnn
+    container_name: digit_recognition_app
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+>>>>>>> e0cc833c6cbb17e2e8549a1aae44ff844e2cf58d
