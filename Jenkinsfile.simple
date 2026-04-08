@@ -1,0 +1,54 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'Checking out source code...'
+                git branch: 'main', url: 'https://github.com/YOUR_USERNAME/YOUR_REPO.git'
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                echo 'Building Docker image...'
+                bat 'docker build -t digit-recognition-cnn .'
+            }
+        }
+        
+        stage('Test') {
+            steps {
+                echo 'Running the model...'
+                bat 'docker run digit-recognition-cnn'
+            }
+        }
+        
+        stage('Push to Docker Hub') {
+            steps {
+                echo 'Pushing to Docker Hub...'
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', 
+                                                  usernameVariable: 'DOCKER_USER', 
+                                                  passwordVariable: 'DOCKER_PASS')]) {
+                    bat '''
+                        docker login -u %DOCKER_USER% -p %DOCKER_PASS%
+                        docker tag digit-recognition-cnn %DOCKER_USER%/digit-recognition-cnn:latest
+                        docker push %DOCKER_USER%/digit-recognition-cnn:latest
+                    '''
+                }
+            }
+        }
+    }
+    
+    post {
+        always {
+            echo 'Cleaning workspace...'
+            cleanWs()
+        }
+        success {
+            echo 'Build succeeded!'
+        }
+        failure {
+            echo 'Build failed!'
+        }
+    }
+}
