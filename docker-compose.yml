@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  digit-recognition:
+    build: .
+    image: digit-recognition-cnn
+    container_name: digit_recognition_app
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONUNBUFFERED=1
