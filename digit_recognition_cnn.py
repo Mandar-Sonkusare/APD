@@ -74,7 +74,5 @@ else:
     print("No test_image.png found, skipping custom image prediction")
 
 print("\nModel training and evaluation completed successfully!")
-<<<<<<< HEAD
-print("xyz")
-=======
->>>>>>> e0cc833c6cbb17e2e8549a1aae44ff844e2cf58d
+
+print("hi")
