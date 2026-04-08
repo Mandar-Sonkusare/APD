@@ -74,3 +74,4 @@ else:
     print("No test_image.png found, skipping custom image prediction")
 
 print("\nModel training and evaluation completed successfully!")
+print("xyz")
